@@ -1,0 +1,1 @@
+puts "total is: #{File.readlines('1a_input.txt').map(&:to_i).reduce(:+)}"
