@@ -10,7 +10,7 @@ def single_char_diff?(str_1, str_2)
       end
     end
   end
-  true
+  seen_diff_char
 end
 
 def common_chars_str(str_1, str_2)

@@ -7,11 +7,11 @@ class BoxId
   end
 
   def has_two_count_char?
-  	not @two_count_chars.empty?
+  	@two_count_chars.any?
   end
 
   def has_three_count_char?
-  	not @three_count_chars.empty?
+  	@three_count_chars.any?
   end
 
   private
