@@ -13,13 +13,8 @@ class FabricClaim
   end
 
   def occupied_squares
-    squares = []
-    @left_edge.upto(@right_edge).each do |x_coord|
-      @top_edge.upto(@bottom_edge).each do |y_coord|
-        squares << "#{x_coord}x#{y_coord}".to_sym
-      end
-    end
-    squares
+    xs, ys = @left_edge.upto(@right_edge).to_a, @top_edge.upto(@bottom_edge).to_a
+    xs.product(ys).map { |x, y| "(#{x},#{y})".to_sym }
   end
 end
 
@@ -37,8 +32,7 @@ class ClaimTracker
     fabric_claim.occupied_squares.each do |coord|
       if @grid[coord]
         ids = @grid[coord] << fabric_claim.id
-        ids.each { |id| @nonoverlapping_claim_ids.delete(id) if @nonoverlapping_claim_ids.include?(id) }
-        # @nonoverlapping_claim_ids.delete_if { |id| ids.include? id }
+        ids.each { |id| @nonoverlapping_claim_ids.delete(id) }
       else
         @grid[coord] = [fabric_claim.id]
       end
