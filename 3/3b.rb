@@ -19,7 +19,6 @@ class FabricClaim
 end
 
 class ClaimTracker
-  attr_reader :nonoverlapping_claim_ids
 
   def initialize
     @grid = {}
@@ -38,6 +37,10 @@ class ClaimTracker
       end
     end
   end
+
+  def nonoverlapping_claim_ids
+    @nonoverlapping_claim_ids.to_a
+  end
 end
 
 
@@ -47,4 +50,4 @@ File.readlines('input.txt').each do |line|
   claim_tracker.add_claim FabricClaim.new(line)
 end
 
-puts "nonoverlapping claims: #{claim_tracker.nonoverlapping_claim_ids.to_a}"
+puts "nonoverlapping claims: #{claim_tracker.nonoverlapping_claim_ids}"
