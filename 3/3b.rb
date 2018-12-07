@@ -1,3 +1,5 @@
+require 'set'
+
 class FabricClaim
   attr_reader :id
 
@@ -12,8 +14,8 @@ class FabricClaim
 
   def occupied_squares
     squares = []
-    (@left_edge..@right_edge).each do |x_coord|
-      (@top_edge..@bottom_edge).each do |y_coord|
+    @left_edge.upto(@right_edge).each do |x_coord|
+      @top_edge.upto(@bottom_edge).each do |y_coord|
         squares << "#{x_coord}x#{y_coord}".to_sym
       end
     end
@@ -26,7 +28,7 @@ class ClaimTracker
 
   def initialize
     @grid = {}
-    @nonoverlapping_claim_ids = []
+    @nonoverlapping_claim_ids = SortedSet.new
   end
 
   def add_claim(fabric_claim)
@@ -34,8 +36,9 @@ class ClaimTracker
 
     fabric_claim.occupied_squares.each do |coord|
       if @grid[coord]
-        @grid[coord] << fabric_claim.id
-        @nonoverlapping_claim_ids.delete_if { |id| @grid[coord].include? id }
+        ids = @grid[coord] << fabric_claim.id
+        ids.each { |id| @nonoverlapping_claim_ids.delete(id) if @nonoverlapping_claim_ids.include?(id) }
+        # @nonoverlapping_claim_ids.delete_if { |id| ids.include? id }
       else
         @grid[coord] = [fabric_claim.id]
       end
@@ -50,4 +53,4 @@ File.readlines('input.txt').each do |line|
   claim_tracker.add_claim FabricClaim.new(line)
 end
 
-puts "nonoverlapping claims: #{claim_tracker.nonoverlapping_claim_ids}"
+puts "nonoverlapping claims: #{claim_tracker.nonoverlapping_claim_ids.to_a}"
