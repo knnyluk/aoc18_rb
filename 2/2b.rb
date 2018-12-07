@@ -1,9 +1,8 @@
 def single_char_diff?(str_1, str_2)
   seen_diff_char = false
-  str_2_chars = str_2.chars
 
-  str_1.each_char.with_index do |c, i|
-    if c != str_2_chars[i]
+  str_1.chars.zip(str_2.chars).each do |c1, c2|
+    if c1 != c2
       if seen_diff_char
       	return false 
       else
