@@ -1,6 +1,6 @@
 require 'set'
 
-input = File.readlines('1a_input.txt').map(&:to_i)
+input = File.readlines('input.txt').map(&:to_i)
 
 seen_frequencies = SortedSet.new
 current_freq = 0
